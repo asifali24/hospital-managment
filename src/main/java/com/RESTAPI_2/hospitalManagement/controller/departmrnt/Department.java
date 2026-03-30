@@ -6,10 +6,9 @@ import com.RESTAPI_2.hospitalManagement.services.department.DepartmentServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,5 +21,11 @@ final private DepartmentServices departmentServices;
     @PostMapping
     public ResponseEntity<GetdepartmentDto> createDepartments(@RequestBody CreateDepartmentDto createDepartment){
         return ResponseEntity.status(HttpStatus.OK).body(departmentServices.createDepartment(createDepartment) );
+    }
+
+    @GetMapping
+    public ResponseEntity<List<GetdepartmentDto>> getDepartments(@RequestParam(defaultValue = "true") Boolean status){
+
+        return ResponseEntity.status(HttpStatus.OK).body(departmentServices.getDepartments(status));
     }
 }

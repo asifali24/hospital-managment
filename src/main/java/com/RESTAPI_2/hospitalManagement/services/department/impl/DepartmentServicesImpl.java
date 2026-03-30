@@ -1,5 +1,6 @@
 package com.RESTAPI_2.hospitalManagement.services.department.impl;
 
+import com.RESTAPI_2.hospitalManagement.controller.departmrnt.Department;
 import com.RESTAPI_2.hospitalManagement.dto.department.CreateDepartmentDto;
 import com.RESTAPI_2.hospitalManagement.dto.department.GetdepartmentDto;
 import com.RESTAPI_2.hospitalManagement.entity.Departments;
@@ -8,6 +9,8 @@ import com.RESTAPI_2.hospitalManagement.services.department.DepartmentServices;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -23,4 +26,18 @@ public class DepartmentServicesImpl implements DepartmentServices {
         Departments newDep = departmentRepo.save(dep);
         return modelMapper.map(newDep, GetdepartmentDto.class);
     }
+
+    @Override
+    public List<GetdepartmentDto> getDepartments(Boolean status){
+        List<Departments> listOfDepartments ;
+        if(status ==true){
+            listOfDepartments = departmentRepo.findByStatus(status);
+        }else{
+            listOfDepartments = departmentRepo.findAll();
+        }
+        return listOfDepartments.stream()
+                .map(d -> modelMapper.map(d, GetdepartmentDto.class))
+                .toList();
+    }
+
 }
