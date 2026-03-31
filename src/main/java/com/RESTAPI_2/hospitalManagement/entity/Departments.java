@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Setter
@@ -30,5 +31,9 @@ public class Departments {
 
         @UpdateTimestamp
         private LocalDateTime updatedAt;
+
+        @OneToMany(mappedBy = "specialisation", cascade = CascadeType.ALL)
+//        @JoinColumn(name = "doctors_id", nullable = true)
+        private List<Doctors> doctors;
 
 }
